@@ -20,6 +20,28 @@ namespace ClubesApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ClubesApp.Models.Club", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Ciudad")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Club");
+                });
+
             modelBuilder.Entity("ClubesApp.Models.Jugador", b =>
                 {
                     b.Property<int>("Id")
@@ -27,6 +49,9 @@ namespace ClubesApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClubId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Dorsal")
                         .HasColumnType("int");
@@ -43,7 +68,25 @@ namespace ClubesApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClubId");
+
                     b.ToTable("Jugador");
+                });
+
+            modelBuilder.Entity("ClubesApp.Models.Jugador", b =>
+                {
+                    b.HasOne("ClubesApp.Models.Club", "Club")
+                        .WithMany("Jugadores")
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Club");
+                });
+
+            modelBuilder.Entity("ClubesApp.Models.Club", b =>
+                {
+                    b.Navigation("Jugadores");
                 });
 #pragma warning restore 612, 618
         }

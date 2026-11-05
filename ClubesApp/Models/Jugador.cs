@@ -20,5 +20,10 @@ namespace ClubesApp.Models
         [Range(1, 99, ErrorMessage = "El dorsal debe estar entre 1 y 99")]
         [Display(Name = "Dorsal")]
         public int Dorsal { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un club")]
+        [Display(Name = "Club")]
+        public int ClubId { get; set; }
+
+        public Club? Club { get; set; }
     }
 }
