@@ -1,0 +1,38 @@
+@model IEnumerable<ClubesApp.Models.Jugador>
+
+@{
+    ViewData["Title"] = "Jugadores";
+}
+
+<h1>Jugadores</h1>
+
+<p>
+    <a asp-action="Create">Crear nuevo jugador</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Posicion)</th>
+            <th>@Html.DisplayNameFor(model => model.Dorsal)</th>
+            <th>Club</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Posicion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Dorsal)</td>
+                <td>@Html.DisplayFor(modelItem => item.Club!.Nombre)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

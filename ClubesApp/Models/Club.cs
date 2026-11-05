@@ -14,7 +14,7 @@ namespace ClubesApp.Models
 
         [StringLength(100, ErrorMessage = "La descripción del club no puede tener más de 100 caracteres."
             )]
-        [Display(Name = "Descripción del Club")]
+        [Display(Name = "Cuidad")]
         public string? Ciudad { get; set; }
 
         public ICollection<Jugador> Jugadores { get; set; } = new List<Jugador>();

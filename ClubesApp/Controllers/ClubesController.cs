@@ -3,22 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClubesApp.Models;
 
-public class JugadorController : Controller
+namespace ClubesApp.Controllers;
+
+public class ClubesController : Controller
 {
     private readonly ClubesAppContext _context;
 
-    public JugadorController(ClubesAppContext context)
+    public ClubesController(ClubesAppContext context)
     {
         _context = context;
     }
 
-    // GET: JUGADORS
+    // GET: CLUBS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Jugador.ToListAsync());
+        return View(await _context.Club.ToListAsync());
     }
 
-    // GET: JUGADORS/Details/5
+    // GET: CLUBS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -26,39 +28,39 @@ public class JugadorController : Controller
             return NotFound();
         }
 
-        var jugador = await _context.Jugador
+        var club = await _context.Club
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (jugador == null)
+        if (club == null)
         {
             return NotFound();
         }
 
-        return View(jugador);
+        return View(club);
     }
 
-    // GET: JUGADORS/Create
+    // GET: CLUBS/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: JUGADORS/Create
+    // POST: CLUBS/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nombre,Posicion,Dorsal,ClubId,Club")] Jugador jugador)
+    public async Task<IActionResult> Create([Bind("Id,Nombre,Ciudad")] Club club)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(jugador);
+            _context.Add(club);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(jugador);
+        return View(club);
     }
 
-    // GET: JUGADORS/Edit/5
+    // GET: CLUBS/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -66,22 +68,22 @@ public class JugadorController : Controller
             return NotFound();
         }
 
-        var jugador = await _context.Jugador.FindAsync(id);
-        if (jugador == null)
+        var club = await _context.Club.FindAsync(id);
+        if (club == null)
         {
             return NotFound();
         }
-        return View(jugador);
+        return View(club);
     }
 
-    // POST: JUGADORS/Edit/5
+    // POST: CLUBS/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nombre,Posicion,Dorsal,ClubId,Club")] Jugador jugador)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nombre,Ciudad")] Club club)
     {
-        if (id != jugador.Id)
+        if (id != club.Id)
         {
             return NotFound();
         }
@@ -90,12 +92,12 @@ public class JugadorController : Controller
         {
             try
             {
-                _context.Update(jugador);
+                _context.Update(club);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JugadorExists(jugador.Id))
+                if (!ClubExists(club.Id))
                 {
                     return NotFound();
                 }
@@ -106,10 +108,10 @@ public class JugadorController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(jugador);
+        return View(club);
     }
 
-    // GET: JUGADORS/Delete/5
+    // GET: CLUBS/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -117,33 +119,33 @@ public class JugadorController : Controller
             return NotFound();
         }
 
-        var jugador = await _context.Jugador
+        var club = await _context.Club
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (jugador == null)
+        if (club == null)
         {
             return NotFound();
         }
 
-        return View(jugador);
+        return View(club);
     }
 
-    // POST: JUGADORS/Delete/5
+    // POST: CLUBS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var jugador = await _context.Jugador.FindAsync(id);
-        if (jugador != null)
+        var club = await _context.Club.FindAsync(id);
+        if (club != null)
         {
-            _context.Jugador.Remove(jugador);
+            _context.Club.Remove(club);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool JugadorExists(int? id)
+    private bool ClubExists(int? id)
     {
-        return _context.Jugador.Any(e => e.Id == id);
+        return _context.Club.Any(e => e.Id == id);
     }
 }
