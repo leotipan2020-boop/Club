@@ -6,13 +6,41 @@
 
 <h1>Detalle del club</h1>
 <hr />
-<dl class="row">
-    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Nombre)</dt>
-    <dd class="col-sm-10">@Html.DisplayFor(model => model.Nombre)</dd>
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ciudad)</dt>
-    <dd class="col-sm-10">@Html.DisplayFor(model => model.Ciudad)</dd>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Nombre)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Nombre)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Ciudad)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Ciudad)
+    </dd>
 </dl>
+
+<h4>Jugadores del club</h4>
+
+@if (Model!.Jugadores.Any())
+{
+    <ul>
+        @foreach (var j in Model.Jugadores)
+        {
+            <li>
+                @j.Nombre - @j.Posicion (#@j.Dorsal)
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Este club todavía no tiene jugadores.</p>
+}
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
     <a asp-action="Index">Volver a la lista</a>

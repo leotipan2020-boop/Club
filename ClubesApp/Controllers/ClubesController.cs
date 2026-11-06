@@ -29,6 +29,7 @@ public class ClubesController : Controller
         }
 
         var club = await _context.Club
+            .Include(c => c.Jugadores)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (club == null)
         {
